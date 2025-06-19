@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+build/
+dist/
+develop-eggs/
+.eggs/
+*.egg-info/
+.env
+.venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Dependencias del sistema de paquetes
+pip-wheel-metadata/
+.pip-modules/
+*.whl
+
+# Entorno de desarrollo / IDEs
+.idea/             # Directorio de configuración de IntelliJ IDEA / PyCharm / DataGrip
+.vscode/           # Directorio de configuración de VS Code
+*.iml              # Archivos de módulo de IntelliJ IDEA
+
+# Archivos de sistema operativo
+.DS_Store          # macOS
+Thumbs.db          # Windows
+
+# Archivos de base de datos
+*.sqlite3
+*.db
+*.log
+local_db.sqlite  # Si usas un archivo SQLite local
+
+# Archivos específicos de MySQL (si se generan localmente o son temporales)
+*.sql.temp         # Archivos temporales de SQL que DataGrip podría crear
+.history/          # Directorio de historial de SQL de DataGrip
+
+# Archivos sensibles (¡MUY IMPORTANTE!)
+*.env              # Si tienes un archivo .env para variables de entorno (por ejemplo, credenciales de DB)
+config_local.py    # Si tienes un archivo de configuración local con credenciales
