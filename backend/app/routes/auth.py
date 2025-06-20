@@ -1,19 +1,28 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.auth_controller import registrar_ciudadano, obtener_ciudadano
+from app.controllers.auth_controller import registrar_ciudadano, login_ciudadano
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/registrar', methods=['POST'])
 def registrar():
-    data = request.json
+    data = request.get_json()
     resultado = registrar_ciudadano(data)
     if resultado:
-        return jsonify({'mensaje': 'Ciudadano registrado correctamente'}), 201
-    return jsonify({'error': 'No se pudo registrar al ciudadano'}), 500
+        return jsonify({"mensaje": "Ciudadano registrado correctamente"}), 201
+    return jsonify({"error": "El número de credencial ya existe"}), 400
 
-@auth_bp.route('/<int:credencial>', methods=['GET'])
-def ver_ciudadano(credencial):
-    ciudadano = obtener_ciudadano(credencial)
-    if ciudadano:
-        return jsonify(ciudadano), 200
-    return jsonify({'error': 'Ciudadano no encontrado'}), 404
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    token = login_ciudadano(data)
+    if token:
+        return jsonify({"access_token": token}), 200
+    return jsonify({"error": "Credenciales inválidas"}), 401
+
+@auth_bp.route('/perfil', methods=['GET'])
+@jwt_required()
+def perfil():
+    numero_credencial = get_jwt_identity()
+    # Aquí podrías usar obtener_ciudadano(numero_credencial) si tienes esa función
+    return jsonify({"mensaje": f"Acceso autorizado para ciudadano con credencial {numero_credencial}"})

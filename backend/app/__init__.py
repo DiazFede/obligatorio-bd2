@@ -17,12 +17,17 @@ from app.routes.departamento import departamento_bp
 from app.routes.establecimiento_eleccion import establecimiento_eleccion_bp
 from app.routes.comisaria import comisaria_bp
 from app.routes.agente import agente_bp
-
-
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
-    app.register_blueprint(auth_bp)
+    CORS(app)
+    app.config.from_object("app.config.Config")
+
+    jwt = JWTManager(app)
+
+    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(eleccion_bp)
     app.register_blueprint(voto_bp)
     app.register_blueprint(resultados_bp, url_prefix='/resultados')

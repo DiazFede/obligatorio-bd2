@@ -4,3 +4,4 @@ class Config:
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'rootpassword'
     MYSQL_DB = 'eleccionesdb'
+    JWT_SECRET_KEY = '1234'
