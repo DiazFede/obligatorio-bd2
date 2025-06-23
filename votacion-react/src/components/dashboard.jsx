@@ -1,8 +1,31 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "../styles/dashboard.css";
+
 export default function Dashboard() {
+  const [elecciones, setElecciones] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/eleccion")
+      .then((res) => setElecciones(res.data))
+      .catch((err) => console.error("Error al cargar elecciones", err));
+  }, []);
+
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Bienvenido al Dashboard</h1>
-      <p>Esta es la página protegida a la que accedes luego de iniciar sesión.</p>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Elecciones disponibles</h1>
+      <div className="dashboard-list">
+        {elecciones.map((e) => (
+          <div key={e.id} className="dashboard-item">
+            <div className="dashboard-info">
+              <p className="dashboard-tipo">{e.tipo}</p>
+              <p className="dashboard-fecha">{e.fecha}</p>
+            </div>
+            <button className="dashboard-ver">Participar</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

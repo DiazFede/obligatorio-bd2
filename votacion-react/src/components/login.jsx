@@ -56,7 +56,7 @@ export default function Login() {
         <p className="login-footer">
           ¿No tienes cuenta?{" "}
           <Link to="/register">Regístrate aquí</Link>
-        </p>
+        </p> 
       </div>
     </div>
   );
