@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/register.css";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -38,47 +39,57 @@ export default function Register() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="numero_credencial"
-        value={formData.numero_credencial}
-        onChange={handleChange}
-        placeholder="Número de credencial"
-        required
-      />
-      <input
-        name="CI"
-        value={formData.CI}
-        onChange={handleChange}
-        placeholder="Cédula de identidad"
-        required
-      />
-      <input
-        name="nombre"
-        value={formData.nombre}
-        onChange={handleChange}
-        placeholder="Nombre"
-        required
-      />
-      <input
-        name="apellido"
-        value={formData.apellido}
-        onChange={handleChange}
-        placeholder="Apellido"
-        required
-      />
-      <input
-        name="edad"
-        type="number"
-        min="18"
-        value={formData.edad}
-        onChange={handleChange}
-        placeholder="Edad"
-        required
-      />
-      <button type="submit">Registrar</button>
-      {error && <p style={{color: "red"}}>{error}</p>}
-      {success && <p style={{color: "green"}}>{success}</p>}
-    </form>
+    <div className="register-container">
+      <div className="register-box">
+        <h1 className="register-title">Registro de Usuario</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="numero_credencial"
+            value={formData.numero_credencial}
+            onChange={handleChange}
+            placeholder="Número de credencial"
+            required
+            className="register-input"
+          />
+          <input
+            name="CI"
+            value={formData.CI}
+            onChange={handleChange}
+            placeholder="Cédula de identidad"
+            required
+            className="register-input"
+          />
+          <input
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            placeholder="Nombre"
+            required
+            className="register-input"
+          />
+          <input
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleChange}
+            placeholder="Apellido"
+            required
+            className="register-input"
+          />
+          <input
+            name="edad"
+            type="number"
+            min="18"
+            value={formData.edad}
+            onChange={handleChange}
+            placeholder="Edad"
+            required
+            className="register-input"
+          />
+          <button type="submit" className="register-button">Registrar</button>
+          {error && <p className="register-error">{error}</p>}
+          {success && <p className="register-success">{success}</p>}
+        </form>
+      </div>
+    </div>
   );
 }

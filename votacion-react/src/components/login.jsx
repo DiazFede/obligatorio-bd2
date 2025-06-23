@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { saveToken } from "../utils/auth";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/login.css";
 
 export default function Login() {
   const [credencial, setCredencial] = useState("");
@@ -25,41 +26,36 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-900 p-6">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">
           Sistema de Votación - Uruguay
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={credencial}
             onChange={(e) => setCredencial(e.target.value)}
-            placeholder="Número de credencial"
+            placeholder="Credencial"
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="login-input"
           />
           <input
             type="text"
             value={ci}
             onChange={(e) => setCi(e.target.value)}
-            placeholder="Cédula de identidad"
+            placeholder="CI"
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="login-input"
           />
-          <button
-            type="submit"
-            className="w-full bg-blue-700 text-white font-semibold py-3 rounded-md hover:bg-blue-800 transition"
-          >
+          <button type="submit" className="login-button">
             Ingresar
           </button>
         </form>
-        {error && <p className="mt-4 text-center text-red-600 font-medium">{error}</p>}
-        <p className="mt-6 text-center text-gray-600">
+        {error && <p className="login-error">{error}</p>}
+        <p className="login-footer">
           ¿No tienes cuenta?{" "}
-          <Link to="/register" className="text-blue-700 font-semibold hover:underline">
-            Regístrate aquí
-          </Link>
+          <Link to="/register">Regístrate aquí</Link>
         </p>
       </div>
     </div>
