@@ -17,3 +17,10 @@ def ver(id_eleccion):
     if eleccion:
         return jsonify(eleccion), 200
     return jsonify({'error': 'Elección no encontrada'}), 404
+
+from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, obtener_todas_las_elecciones
+
+@eleccion_bp.route('/', methods=['GET'])
+def listar_elecciones():
+    elecciones = obtener_todas_las_elecciones()
+    return jsonify(elecciones), 200

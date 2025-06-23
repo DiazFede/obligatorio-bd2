@@ -94,3 +94,5 @@ def update_data(query, params=None):
 def delete_data(query, params=None):
     """Ejecuta una consulta DELETE."""
     return execute_query(query, params)
+
+
