@@ -1,4 +1,4 @@
-from app.db import insert_data, get_one
+from app.db import insert_data, get_one, get_all
 
 def crear_papeleta(data):
     # Validar que la lista exista
@@ -32,3 +32,6 @@ def crear():
     if resultado:
         return jsonify({"message": "Papeleta creada correctamente"}), 201
     return jsonify({"error": "No se pudo crear la papeleta"}), 500
+
+def obtener_papeletas():
+    return get_all("SELECT * FROM Lista NATURAL JOIN Papeleta")

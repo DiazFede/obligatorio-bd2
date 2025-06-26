@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.municipal_controller import crear_lista_municipal
+from app.controllers.municipal_controller import crear_lista_municipal, obtener_listas_municipales
 
 municipal_bp = Blueprint('municipal', __name__)
 
@@ -14,3 +14,7 @@ def crear():
     if resultado:
         return jsonify({"message": "Lista municipal registrada correctamente"}), 201
     return jsonify({"error": "No se pudo registrar la lista municipal"}), 500
+
+@municipal_bp.route("/listas/municipales", methods=["GET"])
+def get_all_municipales():
+    return jsonify(obtener_listas_municipales())

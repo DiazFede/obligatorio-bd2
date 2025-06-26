@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.ballotage_controller import crear_lista_ballotage
+from app.controllers.ballotage_controller import crear_lista_ballotage, obtener_listas_ballotage
 
 ballotage_bp = Blueprint('ballotage', __name__)
 
@@ -14,3 +14,7 @@ def crear():
     if resultado:
         return jsonify({"message": "Lista ballotage registrada correctamente"}), 201
     return jsonify({"error": "No se pudo registrar la lista ballotage"}), 500
+
+@ballotage_bp.route("/listas/ballotage", methods=["GET"])
+def get_all_ballotage():
+    return jsonify(obtener_listas_ballotage())

@@ -1,4 +1,4 @@
-from app.db import insert_data, get_one
+from app.db import insert_data, get_one, get_all
 
 def crear_lista_municipal(data):
     # Verificar si la lista base existe
@@ -13,3 +13,6 @@ def crear_lista_municipal(data):
 
     query = "INSERT INTO Lista_Municipal (id, candidato) VALUES (%s, %s)"
     return insert_data(query, (data['id'], data['candidato']))
+
+def obtener_listas_municipales():
+    return get_all("SELECT * FROM Lista NATURAL JOIN Lista_Municipal")

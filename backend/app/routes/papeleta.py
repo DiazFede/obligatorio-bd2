@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.papeleta_controller import crear_papeleta
+from app.controllers.papeleta_controller import crear_papeleta, obtener_papeletas
 
 papeleta_bp = Blueprint('papeleta', __name__)
 
@@ -15,3 +15,7 @@ def crear():
     if resultado:
         return jsonify({"message": "Papeleta creada correctamente"}), 201
     return jsonify({"error": "No se pudo crear la papeleta"}), 500
+
+@papeleta_bp.route("/listas/papeletas", methods=["GET"])
+def get_all_papeletas():
+    return jsonify(obtener_papeletas())
