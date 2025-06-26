@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.voto_controller import emitir_voto_completo
+from app.controllers.voto_controller import emitir_voto_completo, emitir_voto
 
 voto_bp = Blueprint('voto', __name__, url_prefix='/voto')
 
@@ -19,3 +19,12 @@ def emitir():
     except Exception as e:
         print(f"❌ Error al emitir voto: {e}")
         return jsonify({'error': 'Error interno en el servidor'}), 500
+
+@voto_bp.route("/voto", methods=["POST"])
+def votar():
+    data = request.get_json()
+    resultado = emitir_voto(data)
+
+    if resultado == "YA_VOTO":
+        return jsonify({"error": "Ya has votado en esta elección"}), 403
+    return jsonify({"mensaje": "Voto registrado"})

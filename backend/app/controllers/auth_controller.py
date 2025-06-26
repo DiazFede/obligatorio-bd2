@@ -37,4 +37,8 @@ def login_ciudadano(data):
     
     expires = timedelta(hours=2)
     access_token = create_access_token(identity=ciudadano['numero_credencial'], expires_delta=expires)
-    return access_token
+    
+    return {
+    "access_token": access_token,
+    "numero_credencial": ciudadano['numero_credencial']
+    }

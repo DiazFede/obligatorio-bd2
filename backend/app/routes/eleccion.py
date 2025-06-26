@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion
+from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, elecciones_disponibles
 
 eleccion_bp = Blueprint('eleccion', __name__, url_prefix='/eleccion')
 
@@ -24,3 +24,7 @@ from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion
 def listar_elecciones():
     elecciones = obtener_todas_las_elecciones()
     return jsonify(elecciones), 200
+
+@eleccion_bp.route("/<numero_credencial>", methods=["GET"])
+def obtener_elecciones(numero_credencial):
+    return jsonify(elecciones_disponibles(numero_credencial))

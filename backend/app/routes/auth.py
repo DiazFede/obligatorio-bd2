@@ -15,9 +15,9 @@ def registrar():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    token = login_ciudadano(data)
-    if token:
-        return jsonify({"access_token": token}), 200
+    resultado = login_ciudadano(data)
+    if resultado:
+        return jsonify(resultado), 200
     return jsonify({"error": "Credenciales inválidas"}), 401
 
 @auth_bp.route('/perfil', methods=['GET'])

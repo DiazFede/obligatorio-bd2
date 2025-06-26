@@ -10,20 +10,21 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError(null);
-    try {
-      const res = await axios.post("http://localhost:5000/auth/login", {
-        numero_credencial: credencial,
-        CI: ci
-      });
-      saveToken(res.data.access_token);
-      navigate("/dashboard");
-    } catch {
-      setError("Credenciales inválidas");
-    }
+async function handleSubmit(e) {
+  e.preventDefault();
+  setError(null);
+  try {
+    const res = await axios.post("http://localhost:5000/auth/login", {
+      numero_credencial: credencial,
+      CI: ci
+    });
+    saveToken(res.data.access_token);
+    localStorage.setItem("numero_credencial", res.data.numero_credencial);
+    navigate("/dashboard");
+  } catch {
+    setError("Credenciales inválidas");
   }
+}
 
   return (
     <div className="login-container">

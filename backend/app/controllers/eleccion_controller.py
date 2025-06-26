@@ -1,4 +1,4 @@
-from app.db import insert_data, get_one
+from app.db import insert_data, get_one, get_all
 
 def crear_eleccion(data):
     query = """
@@ -21,3 +21,13 @@ from app.db import get_all
 def obtener_todas_las_elecciones():
     query = "SELECT * FROM Eleccion"
     return get_all(query)
+
+
+def elecciones_disponibles(numero_credencial):
+    query = """
+        SELECT e.*
+        FROM Eleccion e
+        JOIN Acto_Electoral ae ON ae.id_eleccion = e.id_eleccion
+        WHERE ae.numero_credencial = %s
+    """
+    return get_all(query, (numero_credencial,))
