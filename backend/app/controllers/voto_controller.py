@@ -6,7 +6,15 @@ def emitir_voto(data):
     numero_credencial = data.get("numero_credencial")
     id_eleccion = data.get("id_eleccion")
 
-    # Verificar si ya emitió voto en esta elección
+    status_query = """
+        SELECT status
+        FROM Eleccion
+        WHERE id_eleccion = %s
+    """
+    status = get_one(status_query, (id_eleccion,))
+    if not status or not status['status']:
+        return "ELECCION_CERRADA"
+
     check_query = """
         SELECT voto_emitido
         FROM Acto_Electoral
@@ -20,14 +28,12 @@ def emitir_voto(data):
     if result['voto_emitido']:
         return "YA_VOTO"
 
-    # Insertar voto de forma anónima
     voto_query = """
         INSERT INTO Voto (id_lista, fecha, condicion)
         VALUES (%s, %s, %s)
     """
     insert_data(voto_query, (id_lista, date.today(), "emitido"))
 
-    # Marcar que ya votó en Acto_Electoral
     update_query = """
         UPDATE Acto_Electoral
         SET voto_emitido = TRUE

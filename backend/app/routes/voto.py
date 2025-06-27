@@ -12,5 +12,7 @@ def votar():
         return jsonify({"error": "Ya has votado en esta elección"}), 403
     if resultado == "NO_HABILITADO":
         return jsonify({"error": "No estás habilitado para esta elección"}), 403
+    if resultado == "ELECCION_CERRADA":
+        return jsonify({"error": "La elección está cerrada y no se puede votar"}), 403
 
     return jsonify({"mensaje": "Voto registrado correctamente"}), 201

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, elecciones_disponibles
+from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, elecciones_disponibles, cambiar_estado_eleccion
 
 eleccion_bp = Blueprint('eleccion', __name__, url_prefix='/eleccion')
 
@@ -28,3 +28,15 @@ def listar_elecciones():
 @eleccion_bp.route("/<numero_credencial>", methods=["GET"])
 def obtener_elecciones(numero_credencial):
     return jsonify(elecciones_disponibles(numero_credencial))
+
+@eleccion_bp.route('/<int:id_eleccion>/status', methods=['PUT'])
+def actualizar_estado_eleccion(id_eleccion):
+    data = request.get_json()
+    nuevo_estado = data.get("status")
+
+    if nuevo_estado not in [0, 1, True, False]:
+        return jsonify({"error": "Estado inválido"}), 400
+
+    cambiar_estado_eleccion(id_eleccion, nuevo_estado)
+    estado_str = "abierta" if nuevo_estado else "cerrada"
+    return jsonify({"mensaje": f"Elección marcada como {estado_str} correctamente"}), 200
