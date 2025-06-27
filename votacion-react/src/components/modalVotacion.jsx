@@ -6,8 +6,9 @@ export default function ModalVotacion({ eleccion, listas, onClose, onVotar }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>{eleccion.tipo} - {eleccion.fecha}</h2>
-        <div className="listas-container">
+        <h2>
+          {eleccion.tipo} - {new Date(eleccion.fecha).toLocaleDateString('es-ES')}
+        </h2>        <div className="listas-container">
           {listas.map((lista) => (
             <div key={lista.id} className="lista-card">
               <p><strong>ID:</strong> {lista.id}</p>

@@ -106,8 +106,9 @@ export default function Dashboard() {
           <div key={e.id_eleccion} className="dashboard-item">
             <div className="dashboard-info">
               <p className="dashboard-tipo">{e.tipo}</p>
-              <p className="dashboard-fecha">{e.fecha}</p>
-            </div>
+              <p className="dashboard-fecha">
+                {new Date(e.fecha).toLocaleDateString('es-ES')}
+              </p>            </div>
             <button
               className="dashboard-ver"
               onClick={() => handleParticipar(e)}
