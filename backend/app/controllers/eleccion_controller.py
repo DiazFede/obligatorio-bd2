@@ -25,7 +25,7 @@ def obtener_todas_las_elecciones():
 
 def elecciones_disponibles(numero_credencial):
     query = """
-        SELECT e.*
+        SELECT e.*, ae.numero_circuito
         FROM Eleccion e
         JOIN Acto_Electoral ae ON ae.id_eleccion = e.id_eleccion
         WHERE ae.numero_credencial = %s

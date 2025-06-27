@@ -1,0 +1,29 @@
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366;
+  color: white;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.header-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.header-button:hover {
+  color: #a3c4f3;
+}

@@ -8,6 +8,7 @@ export default function Dashboard() {
   const [modalVisible, setModalVisible] = useState(false);
   const [seleccionada, setSeleccionada] = useState(null);
   const [listas, setListas] = useState([]);
+  const [numeroCircuito, setNumeroCircuito] = useState(null);
 
   useEffect(() => {
     const numeroCredencial = localStorage.getItem("numero_credencial");
@@ -16,9 +17,15 @@ export default function Dashboard() {
       return;
     }
 
+    // Obtener elecciones disponibles y el circuito
     axios
       .get(`http://localhost:5000/eleccion/${numeroCredencial}`)
-      .then((res) => setElecciones(res.data))
+      .then((res) => {
+        setElecciones(res.data);
+        if (res.data.length > 0) {
+          setNumeroCircuito(res.data[0].numero_circuito);
+        }
+      })
       .catch((err) => console.error("Error al cargar elecciones", err));
   }, []);
 
@@ -78,7 +85,7 @@ export default function Dashboard() {
       })
       .catch((err) => {
         if (err.response?.status === 403) {
-          alert("Ya has votado en esta elección.");
+          alert(err.response.data.error);
         } else {
           alert("Error al emitir el voto.");
         }
@@ -89,14 +96,22 @@ export default function Dashboard() {
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Elecciones disponibles</h1>
+      {numeroCircuito && (
+        <p className="dashboard-fecha">
+          Su circuito es el circuito número: {numeroCircuito}
+        </p>
+      )}
       <div className="dashboard-list">
         {elecciones.map((e) => (
-          <div key={e.id} className="dashboard-item">
+          <div key={e.id_eleccion} className="dashboard-item">
             <div className="dashboard-info">
               <p className="dashboard-tipo">{e.tipo}</p>
               <p className="dashboard-fecha">{e.fecha}</p>
             </div>
-            <button className="dashboard-ver" onClick={() => handleParticipar(e)}>
+            <button
+              className="dashboard-ver"
+              onClick={() => handleParticipar(e)}
+            >
               Participar
             </button>
           </div>
