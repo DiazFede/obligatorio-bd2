@@ -10,4 +10,7 @@ def votar():
 
     if resultado == "YA_VOTO":
         return jsonify({"error": "Ya has votado en esta elección"}), 403
-    return jsonify({"mensaje": "Voto registrado"})
+    if resultado == "NO_HABILITADO":
+        return jsonify({"error": "No estás habilitado para esta elección"}), 403
+
+    return jsonify({"mensaje": "Voto registrado correctamente"}), 201

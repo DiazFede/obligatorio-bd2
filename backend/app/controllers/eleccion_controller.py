@@ -29,5 +29,6 @@ def elecciones_disponibles(numero_credencial):
         FROM Eleccion e
         JOIN Acto_Electoral ae ON ae.id_eleccion = e.id_eleccion
         WHERE ae.numero_credencial = %s
+        AND ae.voto_emitido = 0
     """
     return get_all(query, (numero_credencial,))

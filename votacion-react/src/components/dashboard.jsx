@@ -67,13 +67,13 @@ export default function Dashboard() {
       .post("http://localhost:5000/voto", {
         id_lista: idLista,
         numero_credencial: numeroCredencial,
-        id_eleccion: seleccionada.id
+        id_eleccion: seleccionada.id_eleccion
       })
       .then(() => {
         alert("Voto emitido correctamente.");
         setModalVisible(false);
         setElecciones((prev) =>
-          prev.filter((e) => e.id !== seleccionada.id)
+          prev.filter((e) => e.id_eleccion !== seleccionada.id_eleccion)
         );
       })
       .catch((err) => {

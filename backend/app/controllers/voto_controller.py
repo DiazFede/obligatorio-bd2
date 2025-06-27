@@ -6,19 +6,33 @@ def emitir_voto(data):
     numero_credencial = data.get("numero_credencial")
     id_eleccion = data.get("id_eleccion")
 
-    # Verifica si el ciudadano ya emitió un voto en esta elección
-    query_ya_voto = """
-        SELECT 1
-        FROM Acto_Electoral ae
-        WHERE ae.numero_credencial = %s AND ae.id_eleccion = %s
+    # Verificar si ya emitió voto en esta elección
+    check_query = """
+        SELECT voto_emitido
+        FROM Acto_Electoral
+        WHERE numero_credencial = %s AND id_eleccion = %s
     """
-    ya_voto = get_one(query_ya_voto, (numero_credencial, id_eleccion))
-    if ya_voto:
+    result = get_one(check_query, (numero_credencial, id_eleccion))
+
+    if not result:
+        return "NO_HABILITADO"
+
+    if result['voto_emitido']:
         return "YA_VOTO"
 
-    # Registrar el voto (anónimo)
-    query = """
+    # Insertar voto de forma anónima
+    voto_query = """
         INSERT INTO Voto (id_lista, fecha, condicion)
         VALUES (%s, %s, %s)
     """
-    return insert_data(query, (id_lista, date.today(), "emitido"))
+    insert_data(voto_query, (id_lista, date.today(), "emitido"))
+
+    # Marcar que ya votó en Acto_Electoral
+    update_query = """
+        UPDATE Acto_Electoral
+        SET voto_emitido = TRUE
+        WHERE numero_credencial = %s AND id_eleccion = %s
+    """
+    insert_data(update_query, (numero_credencial, id_eleccion))
+
+    return "OK"
