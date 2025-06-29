@@ -1,9 +1,8 @@
 .login-container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 2rem;
   background-color: #f5f7fa;
   font-family: 'Inter', Helvetica, sans-serif;
 }
@@ -83,4 +82,14 @@
 
 .login-footer a:hover {
   text-decoration: underline;
+}
+
+.login-text {
+    font-family: 'Inter', Helvetica, sans-serif;
+    text-align: center;
+    font-size: 22px;
+}
+
+.logout-button {
+  
 }

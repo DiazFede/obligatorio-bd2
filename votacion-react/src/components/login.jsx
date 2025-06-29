@@ -30,10 +30,11 @@ async function handleSubmit(e) {
   return (
     <>
       <LoginHeader />
+      <p className="login-text">Bienvenido al sistema de votación online de la Corte Electoral</p>
       <div className="login-container">
         <div className="login-box">
           <h1 className="login-title">
-            Sistema de Votación - Uruguay
+            Iniciar sesion
           </h1>
           <form onSubmit={handleSubmit}>
             <input

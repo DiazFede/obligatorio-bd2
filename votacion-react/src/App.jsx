@@ -3,6 +3,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
+import AdminLogin from "./components/adminLogin";
 import "./main.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
       </Routes>
     </Router>
   );

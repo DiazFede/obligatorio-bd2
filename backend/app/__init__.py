@@ -18,6 +18,8 @@ from app.routes.establecimiento_eleccion import establecimiento_eleccion_bp
 from app.routes.comisaria import comisaria_bp
 from app.routes.agente import agente_bp
 from app.routes.presidencial import presidencial_bp
+from app.routes.admin import admin_bp
+from app.routes.estadisticas import estadisticas_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -47,4 +49,6 @@ def create_app():
     app.register_blueprint(comisaria_bp)
     app.register_blueprint(agente_bp)
     app.register_blueprint(presidencial_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(estadisticas_bp)
     return app

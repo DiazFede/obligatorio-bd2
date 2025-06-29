@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/admin.css";
 
 export default function Admin() {
   const [elecciones, setElecciones] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const adminSesion = localStorage.getItem("admin_sesion");
+    if (!adminSesion) {
+      navigate("/admin-login");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     axios
@@ -17,7 +26,7 @@ export default function Admin() {
 
     axios
       .put(`http://localhost:5000/eleccion/${id_eleccion}/status`, {
-        status: nuevoEstado
+        status: nuevoEstado,
       })
       .then(() => {
         setElecciones((prev) =>
@@ -32,9 +41,15 @@ export default function Admin() {
       });
   };
 
+  const cerrarSesion = () => {
+    localStorage.removeItem("admin_sesion");
+    navigate("/admin-login");
+  };
+
   return (
     <div className="admin-container">
-      <h1 className="admin-title">Administrar Elecciones</h1>
+      <h1 className="admin-title">Panel de administración</h1>
+
       <table className="admin-table">
         <thead>
           <tr>
@@ -50,7 +65,7 @@ export default function Admin() {
             <tr key={e.id_eleccion}>
               <td>{e.id_eleccion}</td>
               <td>{e.tipo}</td>
-              <td>{e.fecha}</td>
+              <td>{new Date(e.fecha).toLocaleDateString('es-ES')}</td>
               <td>{e.status ? "Abierta" : "Cerrada"}</td>
               <td>
                 <button
@@ -64,6 +79,20 @@ export default function Admin() {
           ))}
         </tbody>
       </table>
+
+      <div className="logout-container">
+        <button
+          className="admin-button export-button"
+          onClick={() => {
+            window.open("http://localhost:5000/estadisticas/exportar", "_blank");
+          }}
+        >
+          Exportar resultados
+        </button>
+        <button className="admin-button logout-button" onClick={cerrarSesion}>
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   );
 }

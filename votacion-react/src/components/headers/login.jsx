@@ -8,7 +8,7 @@ export default function LoginHeader() {
     <header className="login-header">
       <button
         className="header-button"
-        onClick={() => navigate("/admin")}
+        onClick={() => navigate("/admin-login")}
         aria-label="Administración"
       >
         <i className="fa-solid fa-screwdriver-wrench"></i>
