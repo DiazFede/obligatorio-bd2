@@ -8,19 +8,17 @@ def generar_csv_estadisticas():
     output = io.StringIO()
     writer = csv.writer(output)
 
-    writer.writerow(["id_lista", "candidato", "votos", "porcentaje"])
+    writer.writerow(["id_lista", "tipo", "candidato", "votos", "porcentaje"])
 
     for eleccion in elecciones:
         tipo_eleccion = eleccion['tipo'].lower()
 
         if tipo_eleccion == "presidencial":
             listas = get_all("SELECT id, presidente as candidato FROM Lista_Presidencial")
-        elif tipo_eleccion in ["ballotage", "municipal"]:
-            listas = get_all("""
-                SELECT id, candidato FROM Lista_Municipal
-                UNION
-                SELECT id, candidato FROM Lista_Ballotage
-            """)
+        elif tipo_eleccion == "ballotage":
+            listas = get_all("SELECT id, candidato FROM Lista_Ballotage")
+        elif tipo_eleccion == "municipal":
+            listas = get_all("SELECT id, candidato FROM Lista_Municipal")
         elif tipo_eleccion in ["plebiscito", "referendum"]:
             listas = get_all("SELECT id, opcion as candidato FROM Papeleta")
         else:
@@ -29,7 +27,7 @@ def generar_csv_estadisticas():
         lista_ids = [l['id'] for l in listas]
 
         if not lista_ids:
-            continue 
+            continue
 
         placeholders = ','.join(['%s'] * len(lista_ids))
         total_votos_result = get_all(f"""
@@ -57,6 +55,7 @@ def generar_csv_estadisticas():
 
             writer.writerow([
                 lista_id,
+                eleccion['tipo'],
                 candidato,
                 cant_votos,
                 porcentaje
