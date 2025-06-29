@@ -1,5 +1,11 @@
 from flask import Blueprint, request, jsonify
-from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, elecciones_disponibles, cambiar_estado_eleccion
+from app.controllers.eleccion_controller import (
+    crear_eleccion,
+    obtener_eleccion,
+    elecciones_disponibles,
+    cambiar_estado_eleccion,
+    obtener_todas_las_elecciones
+)
 
 eleccion_bp = Blueprint('eleccion', __name__, url_prefix='/eleccion')
 
@@ -18,8 +24,6 @@ def ver(id_eleccion):
         return jsonify(eleccion), 200
     return jsonify({'error': 'Elección no encontrada'}), 404
 
-from app.controllers.eleccion_controller import crear_eleccion, obtener_eleccion, obtener_todas_las_elecciones
-
 @eleccion_bp.route('/', methods=['GET'])
 def listar_elecciones():
     elecciones = obtener_todas_las_elecciones()
@@ -36,6 +40,15 @@ def actualizar_estado_eleccion(id_eleccion):
 
     if nuevo_estado not in [0, 1, True, False]:
         return jsonify({"error": "Estado inválido"}), 400
+
+    eleccion = obtener_eleccion(id_eleccion)
+    if not eleccion:
+        return jsonify({"error": "Elección no encontrada"}), 404
+
+    estado_actual = eleccion['status']
+
+    if estado_actual == False and nuevo_estado == True:
+        return jsonify({"error": "No se puede reabrir una elección una vez cerrada"}), 403
 
     cambiar_estado_eleccion(id_eleccion, nuevo_estado)
     estado_str = "abierta" if nuevo_estado else "cerrada"
