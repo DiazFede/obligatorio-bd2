@@ -1,12 +1,10 @@
 from app.db import get_one, get_all, insert_data, update_data, delete_data
 
 def crear_zona(data):
-    # Validar que el departamento exista
     departamento = get_one("SELECT 1 FROM Departamento WHERE id = %s", (data['id_departamento'],))
     if not departamento:
         return 'DEPARTAMENTO_NO_EXISTE'
 
-    # Validar que no exista zona con ese número
     existe = get_one("SELECT 1 FROM Zona WHERE numero_zona = %s", (data['numero_zona'],))
     if existe:
         return 'YA_EXISTE'
@@ -40,6 +38,5 @@ def actualizar_zona(numero_zona, data):
     return update_data(query, params)
 
 def eliminar_zona(numero_zona):
-    # Aquí podrías validar que no haya establecimientos relacionados
     query = "DELETE FROM Zona WHERE numero_zona = %s"
     return delete_data(query, (numero_zona,))

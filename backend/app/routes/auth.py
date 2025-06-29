@@ -24,5 +24,4 @@ def login():
 @jwt_required()
 def perfil():
     numero_credencial = get_jwt_identity()
-    # Aquí podrías usar obtener_ciudadano(numero_credencial) si tienes esa función
     return jsonify({"mensaje": f"Acceso autorizado para ciudadano con credencial {numero_credencial}"})

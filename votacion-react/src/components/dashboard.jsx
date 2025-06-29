@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/dashboard.css";
 import ModalVotacion from "./ModalVotacion";
@@ -10,14 +11,16 @@ export default function Dashboard() {
   const [listas, setListas] = useState([]);
   const [numeroCircuito, setNumeroCircuito] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const numeroCredencial = localStorage.getItem("numero_credencial");
     if (!numeroCredencial) {
       alert("No hay sesión activa. Inicie sesión nuevamente.");
+      navigate("/");
       return;
     }
 
-    // Obtener elecciones disponibles y el circuito
     axios
       .get(`http://localhost:5000/eleccion/${numeroCredencial}`)
       .then((res) => {
@@ -27,7 +30,7 @@ export default function Dashboard() {
         }
       })
       .catch((err) => console.error("Error al cargar elecciones", err));
-  }, []);
+  }, [navigate]);
 
   const handleParticipar = (eleccion) => {
     setSeleccionada(eleccion);
@@ -74,7 +77,7 @@ export default function Dashboard() {
       .post("http://localhost:5000/voto", {
         id_lista: idLista,
         numero_credencial: numeroCredencial,
-        id_eleccion: seleccionada.id_eleccion
+        id_eleccion: seleccionada.id_eleccion,
       })
       .then(() => {
         alert("Voto emitido correctamente.");
@@ -93,6 +96,11 @@ export default function Dashboard() {
       });
   };
 
+  const cerrarSesion = () => {
+    localStorage.removeItem("numero_credencial");
+    navigate("/");
+  };
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Elecciones disponibles</h1>
@@ -107,8 +115,9 @@ export default function Dashboard() {
             <div className="dashboard-info">
               <p className="dashboard-tipo">{e.tipo}</p>
               <p className="dashboard-fecha">
-                {new Date(e.fecha).toLocaleDateString('es-ES')}
-              </p>            </div>
+                {new Date(e.fecha).toLocaleDateString("es-ES")}
+              </p>
+            </div>
             <button
               className="dashboard-ver"
               onClick={() => handleParticipar(e)}
@@ -127,6 +136,12 @@ export default function Dashboard() {
           onVotar={votar}
         />
       )}
+
+      <div className="logout-container">
+        <button className="admin-button logout-button" onClick={cerrarSesion}>
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   );
 }

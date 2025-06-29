@@ -1,5 +1,3 @@
-# backend/app/routes/resultados.py
-
 from flask import Blueprint, request, jsonify
 from app.db import update_data
 from app.db import get_all, get_one
@@ -15,7 +13,6 @@ resultados_bp = Blueprint('resultados', __name__)
 
 @resultados_bp.route('/circuito/<int:id_circuito>/<int:id_eleccion>', methods=['GET'])
 def get_circuito_results(id_circuito, id_eleccion):
-    # Verificar si el circuito está cerrado antes de mostrar resultados 
     query_estado_circuito = "SELECT cerrado FROM Circuito_Estado WHERE numero_circuito = %s AND id_eleccion = %s"
     estado_circuito = get_one(query_estado_circuito, (id_circuito, id_eleccion))
     if not estado_circuito or not estado_circuito['cerrado']:
@@ -52,8 +49,6 @@ def get_circuito_final_candidato_results(id_circuito, id_eleccion):
 
 @resultados_bp.route('/departamento/<int:id_departamento>/<int:id_eleccion>', methods=['GET'])
 def get_departamento_results(id_departamento, id_eleccion):
-    # Aquí la validación de 'cerrado' podría ser más compleja, ya que debe ser para todos los circuitos del departamento
-    # Para simplificar este ejemplo, asumimos que se llamará después del cierre total o se valida dentro del controller.
     resultados = obtener_resultados_departamento(id_departamento, id_eleccion)
     if resultados:
         return jsonify(resultados), 200
@@ -61,7 +56,6 @@ def get_departamento_results(id_departamento, id_eleccion):
 
 @resultados_bp.route('/departamento_ganador/<int:id_departamento>/<int:id_eleccion>', methods=['GET'])
 def get_departamento_winner(id_departamento, id_eleccion):
-    # Similar a la ruta anterior, considerar validación de cierre.
     ganador = obtener_ganador_departamento(id_departamento, id_eleccion)
     if ganador:
         return jsonify(ganador), 200

@@ -1,12 +1,10 @@
 from app.db import insert_data, get_one, get_all
 
 def crear_papeleta(data):
-    # Validar que la lista exista
     lista = get_one("SELECT 1 FROM Lista WHERE id = %s", (data['id'],))
     if not lista:
         return 'LISTA_NO_EXISTE'
 
-    # Validar que no haya ya una papeleta asociada a esta lista
     existente = get_one("SELECT 1 FROM Papeleta WHERE id = %s", (data['id'],))
     if existente:
         return 'YA_EXISTE'
@@ -14,7 +12,6 @@ def crear_papeleta(data):
     query = "INSERT INTO Papeleta (id, opcion) VALUES (%s, %s)"
     return insert_data(query, (data['id'], data['opcion']))
 
-# app/routes/papeleta.py
 from flask import Blueprint, request, jsonify
 from app.controllers.papeleta_controller import crear_papeleta
 

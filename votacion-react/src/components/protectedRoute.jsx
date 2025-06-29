@@ -1,4 +1,3 @@
-// src/components/protectedRoute.jsx
 import { Navigate } from "react-router-dom";
 import { getToken } from "../utils/auth";
 
