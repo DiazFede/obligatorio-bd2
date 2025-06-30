@@ -15,6 +15,9 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   max-width: 400px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-title {
@@ -26,7 +29,7 @@
 }
 
 .login-input {
-  width: 100%;
+  width: 90%;
   padding: 0.75rem 1rem;
   border: 1px solid #a8c3f0;
   border-radius: 0.75rem;
@@ -44,7 +47,7 @@
 }
 
 .login-button {
-  width: 100%;
+  width: 99%;
   background-color: #003366;
   color: white;
   font-weight: 600;
@@ -67,29 +70,8 @@
   font-weight: 500;
 }
 
-.login-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.login-footer a {
-  color: #003366;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.login-footer a:hover {
-  text-decoration: underline;
-}
-
 .login-text {
     font-family: 'Inter', Helvetica, sans-serif;
     text-align: center;
     font-size: 22px;
-}
-
-.logout-button {
-  
 }

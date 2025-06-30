@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ResultadosChart from "../components/admin/resultadosChart";
 import "../styles/admin.css";
 
 export default function Admin() {
   const [elecciones, setElecciones] = useState([]);
+  const [eleccionSeleccionada, setEleccionSeleccionada] = useState(null);
+  const [resultados, setResultados] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,6 +49,16 @@ export default function Admin() {
     navigate("/admin-login");
   };
 
+  const cargarResultados = (id_eleccion) => {
+    axios
+      .get(`http://localhost:5000/estadisticas/detalle/${id_eleccion}`)
+      .then((res) => setResultados(res.data))
+      .catch((err) => {
+        console.error("Error al cargar resultados", err);
+        alert("Error al cargar resultados de la elección.");
+      });
+  };
+
   return (
     <div className="admin-container">
       <h1 className="admin-title">Panel de administración</h1>
@@ -65,7 +78,7 @@ export default function Admin() {
             <tr key={e.id_eleccion}>
               <td>{e.id_eleccion}</td>
               <td>{e.tipo}</td>
-              <td>{new Date(e.fecha).toLocaleDateString('es-ES')}</td>
+              <td>{new Date(e.fecha).toLocaleDateString("es-ES")}</td>
               <td>{e.status ? "Abierta" : "Cerrada"}</td>
               <td>
                 <button
@@ -79,6 +92,37 @@ export default function Admin() {
           ))}
         </tbody>
       </table>
+
+      <div style={{ marginTop: "1rem" }}>
+        <label>Seleccionar elección cerrada para ver resultados:</label>
+        <select
+          className="admin-select"
+          onChange={(e) => {
+            const id = parseInt(e.target.value);
+            setEleccionSeleccionada(id);
+            if (id) cargarResultados(id);
+            else setResultados([]);
+          }}
+          value={eleccionSeleccionada || ""}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          <option value="">-- Seleccionar elección --</option>
+          {elecciones
+            .filter((e) => !e.status)
+            .map((e) => (
+              <option key={e.id_eleccion} value={e.id_eleccion}>
+                {e.tipo} - {new Date(e.fecha).toLocaleDateString("es-ES")}
+              </option>
+            ))}
+        </select>
+      </div>
+
+      {resultados.length > 0 && (
+        <div style={{ marginTop: "2rem" }}>
+          <h2 style={{ textAlign: "center" }}>Resultados de la elección</h2>
+          <ResultadosChart resultados={resultados} />
+        </div>
+      )}
 
       <div className="logout-container">
         <button

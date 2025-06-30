@@ -4,6 +4,7 @@ import Register from "./components/register";
 import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
 import AdminLogin from "./components/adminLogin";
+import Ayuda from "./components/ayuda";
 import "./main.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/ayuda" element={<Ayuda />} />
       </Routes>
     </Router>
   );

@@ -58,10 +58,6 @@ async function handleSubmit(e) {
             </button>
           </form>
           {error && <p className="login-error">{error}</p>}
-          <p className="login-footer">
-            ¿No tienes cuenta?{" "}
-            <Link to="/register">Regístrate aquí</Link>
-          </p> 
         </div>
       </div>  
     </>
