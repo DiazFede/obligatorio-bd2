@@ -127,6 +127,12 @@ export default function Admin() {
       <div className="logout-container">
         <button
           className="admin-button export-button"
+          onClick={() => navigate("/admin/autorizar")}
+        >
+          Autorizar ciudadano
+        </button>
+        <button
+          className="admin-button export-button"
           onClick={() => {
             window.open("http://localhost:5000/estadisticas/exportar", "_blank");
           }}

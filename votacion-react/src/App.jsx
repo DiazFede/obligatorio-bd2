@@ -5,6 +5,7 @@ import Dashboard from "./components/dashboard";
 import Admin from "./components/admin";
 import AdminLogin from "./components/adminLogin";
 import Ayuda from "./components/ayuda";
+import AdminAutorizar from "./components/adminAutorizar";
 import "./main.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/ayuda" element={<Ayuda />} />
+        <Route path="/admin/autorizar" element={<AdminAutorizar />} />
       </Routes>
     </Router>
   );

@@ -6,7 +6,7 @@ from app.routes.resultados import resultados_bp
 from app.routes.candidato import candidato_bp
 from app.routes.partido import partido_bp
 from app.routes.mesa import mesa_bp
-from app.routes.acto_electoral import acto_bp
+from app.routes.acto_electoral import acto_electoral_bp
 from app.routes.lista import lista_bp
 from app.routes.papeleta import papeleta_bp
 from app.routes.municipal import municipal_bp
@@ -37,7 +37,7 @@ def create_app():
     app.register_blueprint(candidato_bp)
     app.register_blueprint(partido_bp)
     app.register_blueprint(mesa_bp)
-    app.register_blueprint(acto_bp)
+    app.register_blueprint(acto_electoral_bp)
     app.register_blueprint(lista_bp)
     app.register_blueprint(papeleta_bp)
     app.register_blueprint(municipal_bp)
