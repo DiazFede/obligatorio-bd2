@@ -13,6 +13,11 @@ def votar():
     if resultado == "NO_HABILITADO":
         return jsonify({"error": "No estás habilitado para esta elección"}), 403
     if resultado == "ELECCION_CERRADA":
-        return jsonify({"error": "La elección está cerrada y no se puede votar"}), 403
+        return jsonify({"error": "La elección está cerrada"}), 403
+    if resultado == "CIUDADANO_NO_EXISTE":
+        return jsonify({"error": "El ciudadano no existe en el sistema"}), 403
+
+    if isinstance(resultado, dict) and resultado.get("status") == "OK":
+        return jsonify(resultado), 201
 
     return jsonify({"mensaje": "Voto registrado correctamente"}), 201

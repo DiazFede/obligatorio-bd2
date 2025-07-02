@@ -66,7 +66,7 @@ export default function Dashboard() {
       });
   };
 
-  const votar = (idLista) => {
+const votar = (idLista) => {
     const numeroCredencial = localStorage.getItem("numero_credencial");
     if (!numeroCredencial) {
       alert("Debe iniciar sesión para emitir un voto.");
@@ -79,7 +79,20 @@ export default function Dashboard() {
         numero_credencial: numeroCredencial,
         id_eleccion: seleccionada.id_eleccion,
       })
-      .then(() => {
+      .then((res) => {
+        console.log("Respuesta del voto:", res.data);
+
+        const { ciudadano, eleccion } = res.data;
+        const contenido = `Se deja constancia de que ${ciudadano.nombre} ${ciudadano.apellido}, con documento de identidad ${ciudadano.ci} votó satisfactoriamente en la elección ${eleccion.tipo} del día ${eleccion.fecha}.`;
+
+        const blob = new Blob([contenido], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `constancia_voto_${eleccion.tipo}_${eleccion.fecha}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+
         alert("Voto emitido correctamente.");
         setModalVisible(false);
         setElecciones((prev) =>
