@@ -6,7 +6,6 @@ def emitir_voto(data):
     numero_credencial = data.get("numero_credencial")
     id_eleccion = data.get("id_eleccion")
 
-    # Verificar que la elección esté abierta
     status_query = """
         SELECT tipo, fecha, status
         FROM Eleccion
@@ -16,7 +15,6 @@ def emitir_voto(data):
     if not eleccion or not eleccion['status']:
         return "ELECCION_CERRADA"
 
-    # Verificar habilitación y obtener circuito
     check_query = """
         SELECT voto_emitido, numero_circuito
         FROM Acto_Electoral
@@ -32,14 +30,12 @@ def emitir_voto(data):
 
     numero_circuito = result['numero_circuito']
 
-    # Insertar el voto
     voto_query = """
         INSERT INTO Voto (id_lista, fecha, condicion, numero_circuito)
         VALUES (%s, %s, %s, %s)
     """
     insert_data(voto_query, (id_lista, date.today(), "emitido", numero_circuito))
 
-    # Marcar que el ciudadano ya votó
     update_query = """
         UPDATE Acto_Electoral
         SET voto_emitido = TRUE
@@ -47,7 +43,6 @@ def emitir_voto(data):
     """
     insert_data(update_query, (numero_credencial, id_eleccion))
 
-    # Obtener datos del ciudadano para constancia
     ciudadano_query = """
         SELECT nombre, apellido, ci
         FROM Ciudadano

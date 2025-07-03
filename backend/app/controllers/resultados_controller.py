@@ -1,21 +1,16 @@
-# backend/app/controllers/resultados_controller.py
-
-from app.db import get_all, get_one # Asegúrate de que get_one también esté importado
+from app.db import get_all, get_one
 
 def obtener_resultados_circuito(id_circuito, id_eleccion):
     """
     Obtiene los resultados detallados de una elección en un circuito particular,
     incluyendo votos por lista, en blanco y anulados.
     """
-    # Calcula votos totales emitidos para el porcentaje
     query_total_votos = """
         SELECT COUNT(id_voto) AS total_votos
         FROM Voto
         WHERE id_circuito = %s AND id_eleccion = %s
     """
-    # get_all siempre retorna una lista, incluso si está vacía.
-    # Si la lista está vacía, el acceso a [0] causaría un IndexError.
-    # get_one es más apropiado para una consulta que esperamos que devuelva una sola fila (o None).
+
     total_votos_data = get_one(query_total_votos, (id_circuito, id_eleccion))
     total_votos = total_votos_data['total_votos'] if total_votos_data and total_votos_data['total_votos'] is not None else 0
 
@@ -24,7 +19,6 @@ def obtener_resultados_circuito(id_circuito, id_eleccion):
             "message": "No se han registrado votos en este circuito para esta elección."
         }
 
-    # Resultados por Lista
     query_listas = """
         SELECT
             L.numero_lista AS Lista, -- Corregido: usando numero_lista
@@ -50,7 +44,6 @@ def obtener_resultados_circuito(id_circuito, id_eleccion):
             "Porcentaje": f"{porcentaje:.2f}%"
         })
 
-    # Votos en Blanco
     query_blanco = """
         SELECT COUNT(id_voto) AS Cant_Votos
         FROM Voto
@@ -66,7 +59,6 @@ def obtener_resultados_circuito(id_circuito, id_eleccion):
         "Porcentaje": f"{porcentaje_blanco:.2f}%"
     })
 
-    # Votos Anulados
     query_anulado = """
         SELECT COUNT(id_voto) AS Cant_Votos
         FROM Voto
@@ -124,7 +116,7 @@ def obtener_resultados_agregados_partido_circuito(id_circuito, id_eleccion):
         if partido in ('En Blanco', 'Anulado'):
             if total_votos_emitidos > 0:
                 porcentaje = (votos / total_votos_emitidos) * 100
-        else: # Para partidos, porcentaje sobre los votos válidos
+        else:
             if total_validos > 0:
                 porcentaje = (votos / total_validos) * 100
 
@@ -155,8 +147,6 @@ def obtener_resultados_finales_candidato_circuito(id_circuito, id_eleccion):
             "message": "No se han registrado votos en este circuito para esta elección."
         }
 
-    # Consulta para obtener votos por candidato
-    # Corregido: Se une a Ciudadano para obtener el nombre_completo del candidato
     query = """
         SELECT
             PP.nombre AS Partido,
@@ -185,7 +175,6 @@ def obtener_resultados_finales_candidato_circuito(id_circuito, id_eleccion):
             "Porcentaje": f"{porcentaje:.2f}%"
         })
 
-    # Votos en Blanco
     query_blanco = """
         SELECT COUNT(id_voto) AS Cant_Votos
         FROM Voto
@@ -201,7 +190,6 @@ def obtener_resultados_finales_candidato_circuito(id_circuito, id_eleccion):
         "Porcentaje": f"{porcentaje_blanco:.2f}%"
     })
 
-    # Votos Anulados
     query_anulado = """
         SELECT COUNT(id_voto) AS Cant_Votos
         FROM Voto
@@ -236,7 +224,6 @@ def obtener_resultados_departamento(id_departamento, id_eleccion):
     if total_votos == 0:
         return {"message": "No se han registrado votos en este departamento para esta elección."}
 
-    # Lógica para resultados por partido, blanco, anulado a nivel de departamento
     query_partidos_depto = """
         SELECT
             CASE
@@ -273,8 +260,7 @@ def obtener_ganador_departamento(id_departamento, id_eleccion):
     Aplica la "ley de lemas" para determinar el candidato ganador en un departamento
     para una elección municipal.
     """
-    # Primero, obtener los votos por candidato y partido en el departamento.
-    # Corregido: Se une a Ciudadano para obtener el nombre_completo del candidato
+
     query_votos_candidato_partido = """
         SELECT
             PP.nombre AS nombre_partido,
@@ -317,7 +303,6 @@ def obtener_ganador_departamento(id_departamento, id_eleccion):
             'votos': votos_candidato
         })
 
-    # Encontrar el partido más votado
     partido_mas_votado = None
     max_votos_partido = -1
 
@@ -329,7 +314,6 @@ def obtener_ganador_departamento(id_departamento, id_eleccion):
     if not partido_mas_votado:
         return {"message": "No se pudo determinar el partido más votado."}
 
-    # Del partido más votado, encontrar el candidato con más votos
     candidatos_del_partido_ganador = votos_por_partido[partido_mas_votado]['candidatos']
     candidato_ganador_final = None
     max_votos_candidato = -1
