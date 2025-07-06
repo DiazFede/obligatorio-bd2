@@ -1,6 +1,6 @@
 -- Crear la base de datos si no existe
-CREATE DATABASE IF NOT EXISTS obligatoriobd2;
-USE obligatoriobd2;
+CREATE DATABASE IF NOT EXISTS eleccionesdb;
+USE eleccionesdb;
 
 -- Crear tablas
 CREATE TABLE Circuito (
