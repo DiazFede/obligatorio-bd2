@@ -101,3 +101,29 @@ python run.py
 Una vez hecho esto, habremos terminado la configuración de nuestro backend.
 > [!TIP]
 > El backend quedará disponible en http://localhost:5000
+
+## Configuración del frontend
+
+1️⃣ Ubicarse en la carpeta del backend:
+```bash
+cd obligatorio-bd2/votacion-react
+```
+
+2️⃣ Instalar dependencias básicas:
+```bash
+npm install
+```
+
+3️⃣ Instalar dependencias adicionales para visualizar estadísticas:
+```bash
+npm install chart.js react-chartjs-2
+```
+
+4️⃣ Levantar el frontend:
+```bash
+npm run dev
+```
+
+Una vez hecho esto, habremos terminado la configuración de nuestro frontend.
+> [!TIP]
+> El backend quedará disponible en http://localhost:5173
