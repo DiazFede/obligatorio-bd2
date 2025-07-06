@@ -64,3 +64,40 @@ Los cuales contienen las tablas y los datos de prueba (respectivamente). Para te
 > Es importante ejecutar los pasos en orden para que DataGrip no de error.
 
 Una vez hecho esto, habremos terminado la configuración de nuestra base de datos.
+
+## Configuración del backend
+
+1️⃣ Ubicarse en la carpeta del backend:
+```bash
+cd backend
+```
+
+2️⃣ Crear un entorno virtual:
+```bash
+python -m venv venv
+```
+
+3️⃣ Activar el entorno virtual:
+
+Si estas usando un sistema operativo Windows, ejecuta:
+```bash
+venv\Scripts\activate
+```
+
+Si estas usando un sistema operativo MacOS o Linux, ejecuta:
+```bash
+source venv/bin/activate
+```
+
+4️⃣ Instalar dependencias:
+```bash
+pip install -r requirements.txt
+```
+
+5️⃣ Levantar el backend:
+```bash
+python run.py
+```
+Una vez hecho esto, habremos terminado la configuración de nuestra base de datos.
+> [!TIP]
+> El backend quedará disponible en http://localhost:5000
