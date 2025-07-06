@@ -20,7 +20,7 @@ Incluye:
 
 ---
 
-## Configuración de la base de datos con Docker
+## Configuración de la base de datos con Docker y DataGrip
 
 1️⃣ Ubicarse en la carpeta raíz del proyecto donde está el `docker-compose.yml`:
 ```bash
@@ -35,7 +35,7 @@ docker-compose up -d
 3️⃣ Crear la conexión a la base de datos en DataGrip:
 
 1) Abrir DataGrip.
-2) Crear una nueva conexión MySQL
+2) Crear una nueva conexión MySQL.
 3) Configurar:
     - Host: localhost
     - Puerto: 3307
@@ -46,4 +46,21 @@ docker-compose up -d
 
 4️⃣ Crear base de datos y tablas en la nueva conexión:
 
-En el directorio
+En el directorio:
+```bash
+/obligatorio-bd2/db/init
+```
+Podemos encontrar los archivos:
+```bash
+schema.sql
+insert.sql
+```
+Los cuales contienen las tablas y los datos de prueba (respectivamente). Para terminar la configuración de la base de datos, debemos:
+1) Abrir una nueva "query console" en nuestra conexión.
+2) Abrir, copiar y pegar el archivo "schema.sql" en la consola y ejecutarlo. Esto nos creará la base de datos y las tablas.
+3) Abrir, copiar y pegar el archivo "insert.sql" en la consola y ejecutarlo. Esto nos insertará los datos de prueba en cada tabla.
+
+> [!WARNING]
+> Es importante ejecutar los pasos en orden para que DataGrip no de error.
+
+Una vez hecho esto, habremos terminado la configuración de nuestra base de datos.
