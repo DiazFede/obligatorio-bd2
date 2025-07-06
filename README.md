@@ -36,13 +36,13 @@ docker-compose up -d
 
 1) Abrir DataGrip.
 2) Crear una nueva conexión MySQL.
-3) Configurar:
+3) Configurar los siguientes parámetros:
     - Host: localhost
     - Puerto: 3307
     - Usuario: root
     - Contraseña: rootpassword
 > [!WARNING]
-> Atencion: No seleccionar nada en el campo "Base de Datos", esta se creará después.
+> Atencion: No seleccionar nada en el campo "Base de datos", esta se creará después.
 
 4️⃣ Crear base de datos y tablas en la nueva conexión:
 
@@ -104,7 +104,7 @@ Una vez hecho esto, habremos terminado la configuración de nuestro backend.
 
 ## Configuración del frontend
 
-1️⃣ Ubicarse en la carpeta del backend:
+1️⃣ Ubicarse en la carpeta del frontend:
 ```bash
 cd obligatorio-bd2/votacion-react
 ```
@@ -126,4 +126,13 @@ npm run dev
 
 Una vez hecho esto, habremos terminado la configuración de nuestro frontend.
 > [!TIP]
-> El backend quedará disponible en http://localhost:5173
+> El frontend quedará disponible en http://localhost:5173
+
+## Acceder a la aplicación web
+
+Una vez configurado todo lo anterior, podremos acceder a nuestra aplicación web a través de la siguiente URL desde cualquier browser:
+```bash
+http://localhost:5173
+```
+
+Una vez ingresada la URL, accederemos a la página de inicio, donde podremos iniciar sesión con nuestro número de credencial cívica y nuestro documento de identidad. 
