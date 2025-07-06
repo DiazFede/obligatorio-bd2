@@ -1,6 +1,5 @@
--- Crear la base de datos si no existe
-CREATE DATABASE IF NOT EXISTS eleccionesdb;
-USE eleccionesdb;
+-- Seleccionar base de datos
+USE FV_Grupo7;
 
 -- Crear tablas
 CREATE TABLE Circuito (

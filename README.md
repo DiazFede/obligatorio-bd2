@@ -37,12 +37,11 @@ docker-compose up -d
 1) Abrir DataGrip.
 2) Crear una nueva conexión MySQL.
 3) Configurar los siguientes parámetros:
-    - Host: localhost
-    - Puerto: 3307
-    - Usuario: root
-    - Contraseña: rootpassword
-> [!WARNING]
-> Atencion: No seleccionar nada en el campo "Base de datos", esta se creará después.
+    - Host: mysql.reto-ucu.net
+    - Puerto: 50006
+    - User: fv_g7_admin
+    - Password: Bd2025!
+    - Database: FV_Grupo7 
 
 4️⃣ Crear base de datos y tablas en la nueva conexión:
 
@@ -57,7 +56,7 @@ insert.sql
 ```
 Los cuales contienen las tablas y los datos de prueba (respectivamente). Para terminar la configuración de la base de datos, debemos:
 1) Abrir una nueva "query console" en nuestra conexión.
-2) Abrir, copiar y pegar el archivo "schema.sql" en la consola y ejecutarlo. Esto nos creará la base de datos y las tablas.
+2) Abrir, copiar y pegar el archivo "schema.sql" en la consola y ejecutarlo. Esto nos seleccionará la base de datos y nos creará las tablas.
 3) Abrir, copiar y pegar el archivo "insert.sql" en la consola y ejecutarlo. Esto nos insertará los datos de prueba en cada tabla.
 
 > [!WARNING]
