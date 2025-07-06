@@ -1,3 +1,8 @@
+-- Crear la base de datos si no existe
+CREATE DATABASE IF NOT EXISTS obligatoriobd2;
+USE obligatoriobd2;
+
+-- Crear tablas
 CREATE TABLE Circuito (
     numero_circuito INT PRIMARY KEY,
     cerrado BOOLEAN DEFAULT FALSE
