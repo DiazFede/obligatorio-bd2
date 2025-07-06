@@ -69,7 +69,7 @@ Una vez hecho esto, habremos terminado la configuración de nuestra base de dato
 
 1️⃣ Ubicarse en la carpeta del backend:
 ```bash
-cd backend
+cd obligatorio-bd2/backend
 ```
 
 2️⃣ Crear un entorno virtual:
@@ -98,6 +98,6 @@ pip install -r requirements.txt
 ```bash
 python run.py
 ```
-Una vez hecho esto, habremos terminado la configuración de nuestra base de datos.
+Una vez hecho esto, habremos terminado la configuración de nuestro backend.
 > [!TIP]
 > El backend quedará disponible en http://localhost:5000
